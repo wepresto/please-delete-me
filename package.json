@@ -52,7 +52,7 @@
     "mailgun.js": "8.0.6",
     "messagebird": "3.8.1",
     "mjml": "4.13.0",
-    "mongoose": "6.4.3",
+    "mongoose": "6.4.6",
     "ncp": "2.0.0",
     "nestjs-basic-acl-sdk": "0.1.7",
     "pg": "8.8.0",
