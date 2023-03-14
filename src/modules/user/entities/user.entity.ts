@@ -9,7 +9,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { Inversionist } from './inversionist.entity';
+import { Lender } from './lender.entity';
 
 // import { Loan } from '../loan/loan.entity';
 // import { LoanRequest } from '../loan-request/loan-request.entity';
@@ -51,8 +51,8 @@ export class User extends BaseEntity {
 
   // relations
 
-  @OneToOne(() => Inversionist, (inversionist) => inversionist.user)
-  inversionist: Inversionist;
+  @OneToOne(() => Lender, (lender) => lender.user, { cascade: true })
+  lender: Lender;
 
   /*
   @OneToMany(() => Loan, (loan) => loan.user)

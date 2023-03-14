@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -27,6 +28,12 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Public()
+  @Post('lender')
+  createLender(@Body() input: CreateBorrowerInput) {
+    return this.userService.createService.createLender(input);
+  }
+
+  @Public()
   @Post('borrower')
   createBorrower(@Body() input: CreateBorrowerInput) {
     return this.userService.createService.createBorrower(input);
@@ -39,8 +46,8 @@ export class UserController {
   }
 
   @PermissionName('users:handle')
-  @Delete('borrower/:authUid')
-  deleteBorrower(@Param() input: GetOneUserInput) {
+  @Delete('borrower')
+  deleteBorrower(@Query() input: GetOneUserInput) {
     return this.userService.deleteService.deleteBorrower(input);
   }
 
@@ -69,9 +76,9 @@ export class UserController {
   }
 
   @PermissionName('user:handle')
-  @Patch('/:authUid/password')
+  @Patch('/password')
   changePassword(
-    @Param() paramInput: GetOneUserInput,
+    @Query() paramInput: GetOneUserInput,
     @Body() bodyInput: ChangeUserPasswordInput,
   ) {
     return this.userService.updateService.changePassword(paramInput, bodyInput);

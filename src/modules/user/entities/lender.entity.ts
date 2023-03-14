@@ -16,9 +16,9 @@ import { User } from './user.entity';
 // import { Loan } from '../loan/loan.entity';
 // import { LoanRequest } from '../loan-request/loan-request.entity';
 
-@Entity({ name: 'inversionist' })
-@Unique('uk_inversionist_uid', ['uuid'])
-export class Inversionist extends BaseEntity {
+@Entity({ name: 'lender' })
+@Unique('uk_lender_uid', ['uuid'])
+export class Lender extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -35,6 +35,6 @@ export class Inversionist extends BaseEntity {
   // relations
 
   @JoinColumn({ name: 'user_id' })
-  @OneToOne(() => User, (user) => user.inversionist)
+  @OneToOne(() => User, (user) => user.lender)
   user: User;
 }

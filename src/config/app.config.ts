@@ -21,6 +21,10 @@ export default registerAs('config', () => {
     acl: {
       companyUid: process.env.BASIC_ACL_COMPANY_UID,
       accessKey: process.env.BASIC_ACL_ACCESS_KEY,
+      roles: {
+        lenderCode: process.env.BASIC_ACL_LENDER_ROLE_CODE,
+        borrowerCode: process.env.BASIC_ACL_BORROWER_ROLE_CODE,
+      },
     },
     rabbitmq: {
       url: process.env.RABBITMQ_URL,
@@ -49,10 +53,8 @@ export default registerAs('config', () => {
       uri: process.env.MONGODB_URI,
     },
     redis: {
-      clientName: process.env.REDIS_CLIENT_NAME,
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
-      password: process.env.REDIS_PASSWORD,
+      url: process.env.REDIS_URL,
+      keyPrefix: process.env.REDIS_KEY_PREFIX,
     },
     messagebird: {
       apiKey: process.env.MESSAGEBIRD_API_KEY,

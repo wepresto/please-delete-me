@@ -1,27 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 import { createClient, RedisClientType } from 'redis';
+import { ConfigType } from '@nestjs/config';
+
+import appConfig from '../../config/app.config';
 
 import { GetInput } from './dto/get-input.dto';
-
 import { SetInput } from './dto/set-input.dto';
-
-const KEY_PREFIX = 'ezpresta_';
 
 @Injectable()
 export class RedisCacheService {
   private client: RedisClientType;
-  constructor() {
+  constructor(
+    @Inject(appConfig.KEY)
+    private readonly appConfiguration: ConfigType<typeof appConfig>,
+  ) {
     this.init();
   }
 
   private async init() {
+    const {
+      redis: { url },
+    } = this.appConfiguration;
     this.client = createClient({
-      socket: {
-        host: process.env.REDIS_HOST,
-        port: +process.env.REDIS_PORT,
-      },
-      password: process.env.REDIS_PASSWORD,
+      url,
     });
 
     this.client.on('error', (err) => {
@@ -35,13 +37,17 @@ export class RedisCacheService {
   public async set(input: SetInput): Promise<void> {
     const { keys, value, ttl = 0 } = input;
 
+    const {
+      redis: { keyPrefix },
+    } = this.appConfiguration;
+
     const key = Object.keys(keys)
       .map((key) => keys[key])
       .join(':');
 
     const newValue = JSON.stringify(value);
 
-    await this.client.set(KEY_PREFIX + key, newValue, {
+    await this.client.set(keyPrefix + key, newValue, {
       EX: ttl,
       NX: true,
     });
@@ -50,11 +56,15 @@ export class RedisCacheService {
   public async get(input: GetInput) {
     const { keys } = input;
 
+    const {
+      redis: { keyPrefix },
+    } = this.appConfiguration;
+
     const key = Object.keys(keys)
       .map((key) => keys[key])
       .join(':');
 
-    const value = await this.client.get(KEY_PREFIX + key);
+    const value = await this.client.get(keyPrefix + key);
 
     if (!value) return null;
 

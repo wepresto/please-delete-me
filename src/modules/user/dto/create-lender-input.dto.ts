@@ -1,6 +1,6 @@
 import { IsEmail, IsNumberString, IsString, Length } from 'class-validator';
 
-export class CreateBorrowerInput {
+export class CreateLenderInput {
   @Length(5, 25)
   @IsNumberString()
   readonly documentNumber: string;
