@@ -62,7 +62,7 @@
     "rimraf": "3.0.2",
     "rxjs": "7.5.7",
     "twilio": "3.77.3",
-    "typeorm": "0.3.10"
+    "typeorm": "0.3.14"
   },
   "devDependencies": {
     "@commitlint/cli": "17.3.0",
